@@ -1,5 +1,5 @@
 /* 여행 언어 노트 — 오프라인 캐시 (비행기 모드에서도 열리도록) */
-const CACHE = "travel-lingo-v4";
+const CACHE = "travel-lingo-v5";
 const ASSETS = [
   "./",
   "./index.html",
