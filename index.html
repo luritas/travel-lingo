@@ -433,6 +433,20 @@ section.view.on{display:block;animation:fade .18s ease}
 .bub.me{align-self:flex-end;align-items:flex-end}
 .bub.me .who{color:var(--accent)}
 .bub.me .box{background:var(--accent);color:var(--accent-ink);border-bottom-right-radius:5px}
+.bub .im{
+  background:var(--panel2);border-radius:11px;padding:8px 6px;margin-bottom:10px;
+  display:flex;align-items:center;justify-content:center;
+}
+.bub .im svg{width:100%;max-width:168px;height:auto;display:block}
+.bub.me .im{
+  background:rgba(255,255,255,.17);
+  --accent:var(--accent-ink);--sub:rgba(255,255,255,.72);--ok:var(--accent-ink);
+}
+.myturn .im{
+  background:var(--panel);border:1px solid var(--line);border-radius:11px;
+  padding:8px 6px;margin-bottom:10px;display:flex;justify-content:center;
+}
+.myturn .im svg{width:100%;max-width:168px;height:auto;display:block}
 .bub .jp{font-size:18px;line-height:1.45;word-break:keep-all}
 .bub .yo{font-size:11.5px;opacity:.72;margin-top:2px}
 .bub .pr{font-size:13.5px;font-weight:700;margin-top:5px;color:var(--accent)}
@@ -1254,6 +1268,109 @@ const SCENES=[
 ]}
 ];
 const sceneById=id=>SCENES.find(s=>s.id===id);
+/* ---------- 대사별 장면 그림 ----------
+   viewBox 120x80 · 선화. A=주요(accent), B=보조(sub) */
+const _A='<g fill="none" stroke="var(--accent)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">';
+const _B='<g fill="none" stroke="var(--sub)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">';
+const _E='</g>';
+const _sv=s=>`<svg viewBox="0 0 120 80" aria-hidden="true">${s}</svg>`;
+/* 공통 부품 */
+const _q='<text x="0" y="0" font-size="26" font-weight="800" fill="var(--sub)">?</text>';
+const Q=(x,y)=>`<text x="${x}" y="${y}" font-size="24" font-weight="800" fill="var(--sub)" font-family="sans-serif">?</text>`;
+const CHK=(x,y,c="var(--ok)")=>`<path d="M${x} ${y} l6 7 l12 -15" fill="none" stroke="${c}" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>`;
+const XM=(x,y,c="var(--accent)")=>`<path d="M${x} ${y} l14 14M${x+14} ${y} l-14 14" fill="none" stroke="${c}" stroke-width="3.4" stroke-linecap="round"/>`;
+const ARR=(x,y,w=22)=>`<path d="M${x} ${y} h${w}M${x+w-7} ${y-6} l7 6 l-7 6" fill="none" stroke="var(--sub)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>`;
+const PERSON=(x,y,c="var(--sub)")=>`<g fill="none" stroke="${c}" stroke-width="2.6" stroke-linecap="round"><circle cx="${x}" cy="${y}" r="6.5"/><path d="M${x-9} ${y+19}a9 9 0 0 1 18 0"/></g>`;
+const NUM=(x,y,n)=>`<g><circle cx="${x}" cy="${y}" r="14" fill="none" stroke="var(--accent)" stroke-width="3"/><text x="${x}" y="${y+7}" font-size="18" font-weight="800" fill="var(--accent)" text-anchor="middle" font-family="sans-serif">${n}</text></g>`;
+const TXT=(x,y,t,s=15,c="var(--accent)")=>`<text x="${x}" y="${y}" font-size="${s}" font-weight="800" fill="${c}" text-anchor="middle" font-family="sans-serif">${t}</text>`;
+
+const TART={
+/* --- 공통 --- */
+"greet":_sv(`${_A}<path d="M24 20h72v46H24z"/><path d="M60 20v46"/>${_E}${_B}<path d="M100 30c5 4 5 12 0 16M108 24c9 8 9 24 0 32"/>${_E}`),
+"thanks":_sv(`${_A}<path d="M60 66c-16-10-26-19-26-30a13 13 0 0 1 26-6 13 13 0 0 1 26 6c0 11-10 20-26 30z"/>${_E}`),
+"yes":_sv(`${_A}<circle cx="60" cy="40" r="26"/>${_E}${CHK(48,40)}`),
+"no":_sv(`${_A}<circle cx="60" cy="40" r="26"/>${_E}${XM(52,32)}`),
+"price":_sv(`${_A}<path d="M30 24h44l16 16-32 30-28-28z"/>${_E}${_B}<circle cx="44" cy="36" r="3.5"/>${_E}${TXT(64,52,"¥",20)}`),
+"card":_sv(`${_A}<rect x="20" y="26" width="52" height="34" rx="5"/><path d="M20 38h52"/>${_E}${_B}<rect x="82" y="34" width="20" height="26" rx="3"/><path d="M86 44h12"/>${_E}${ARR(74,44,6)}`),
+"clock":_sv(`${_A}<circle cx="54" cy="40" r="26"/><path d="M54 24v16l11 8"/>${_E}${Q(88,50)}`),
+
+/* --- 편의점 --- */
+"item":_sv(`${_A}<path d="M34 58 58 20l24 38z"/><path d="M42 48h32"/>${_E}${ARR(86,44,20)}`),
+"bag-ask":_sv(`${_A}<path d="M34 32h40l6 34H28z"/><path d="M46 32v-6a8 8 0 0 1 16 0v6"/>${_E}${Q(88,48)}`),
+"bag-no":_sv(`${_A}<path d="M28 32h36l6 34H22z"/><path d="M38 32v-6a8 8 0 0 1 16 0v6"/>${_E}${XM(76,32)}`),
+"micro":_sv(`${_A}<rect x="20" y="24" width="72" height="34" rx="5"/><path d="M70 24v34"/>${_E}${_B}<path d="M30 36h28M30 46h20"/><circle cx="81" cy="36" r="3"/>${_E}${_B}<path d="M44 18c4-4 4-8 0-12M56 18c4-4 4-8 0-12"/>${_E}`),
+
+/* --- 식당 --- */
+"howmany":_sv(`${PERSON(38,26)}${PERSON(62,26)}${Q(84,44)}`),
+"one":_sv(`${PERSON(46,26)}${NUM(80,40,1)}`),
+"guide":_sv(`${_A}<path d="M24 56h30v-24"/>${_E}${ARR(58,44,26)}${_B}<rect x="88" y="30" width="20" height="28" rx="3"/>${_E}`),
+"callstaff":_sv(`${PERSON(46,34,"var(--accent)")}${_A}<path d="M55 30 L70 14"/>${_E}${_B}<path d="M76 12c4-3 8-3 12 0M78 22c5-4 11-4 16 0"/>${_E}`),
+"menu":_sv(`${_A}<rect x="30" y="16" width="46" height="52" rx="4"/>${_E}${_B}<path d="M40 30h26M40 42h26M40 54h16"/>${_E}${Q(86,48)}`),
+"bowl":_sv(`${_A}<path d="M26 40h64a32 32 0 0 1-32 26 32 32 0 0 1-32-26z"/><path d="M20 40h76"/>${_E}${_B}<path d="M44 30c0-6 6-6 6-12M60 28c0-6 6-6 6-12M76 30c0-6 6-6 6-12"/>${_E}`),
+"point-menu":_sv(`${_A}<rect x="18" y="16" width="44" height="52" rx="4"/><path d="M28 34h24"/>${_E}${_B}<path d="M28 48h24M28 58h14"/>${_E}${ARR(68,36,20)}${_B}<circle cx="98" cy="36" r="7"/>${_E}`),
+"finish":_sv(`${_A}<path d="M28 44h64a32 32 0 0 1-64 0z"/><path d="M22 44h76"/>${_E}${CHK(52,22)}`),
+
+/* --- 역 --- */
+"fare":_sv(`${_A}<rect x="20" y="20" width="60" height="26" rx="4"/>${_E}${TXT(50,39,"¥ ?",17)}${_B}<path d="M28 58h44M34 68h32"/>${_E}`),
+"ticket-where":_sv(`${_A}<rect x="22" y="30" width="44" height="26" rx="4"/><path d="M22 42h44"/>${_E}${Q(80,50)}`),
+"machine":_sv(`${_A}<rect x="34" y="12" width="52" height="56" rx="5"/><rect x="42" y="20" width="36" height="16" rx="3"/>${_E}${_B}<circle cx="50" cy="48" r="4"/><circle cx="62" cy="48" r="4"/><circle cx="74" cy="48" r="4"/><rect x="48" y="58" width="24" height="6" rx="2"/>${_E}${ARR(8,40,22)}`),
+"platform":_sv(`${_A}<path d="M18 58h84"/><path d="M30 58V30h60v28"/>${_E}${_B}<path d="M30 44h60"/>${_E}${Q(54,26)}`),
+"platform3":_sv(`${_A}<path d="M18 62h84"/><path d="M30 62V34h60v28"/>${_E}${TXT(60,56,"3",22)}${_B}<path d="M36 24h48"/>${_E}`),
+
+/* --- 호텔 --- */
+"frontdesk":_sv(`${_A}<path d="M20 44h80v22H20z"/><path d="M30 44V30h60v14"/>${_E}${_B}<circle cx="60" cy="24" r="7"/><path d="M53 24h14"/>${_E}`),
+"name":_sv(`${_A}<rect x="24" y="24" width="72" height="34" rx="4"/>${_E}${_B}<path d="M34 40h30M34 50h18"/>${_E}${Q(78,50)}`),
+"sayname":_sv(`${PERSON(38,28,"var(--accent)")}${_A}<path d="M60 24h44v26H72l-8 10V50h0"/>${_E}${_B}<path d="M76 34h20"/>${_E}`),
+"passport":_sv(`${_A}<rect x="34" y="14" width="46" height="56" rx="4"/>${_E}${_B}<circle cx="57" cy="34" r="9"/><path d="M46 54h22"/>${_E}`),
+"handover":_sv(`${_A}<rect x="16" y="28" width="34" height="26" rx="3"/>${_E}${ARR(56,42,24)}${_B}<rect x="84" y="28" width="22" height="26" rx="3"/>${_E}`),
+"clock11":_sv(`${_A}<circle cx="60" cy="40" r="28"/><path d="M60 22v18l12 6"/>${_E}${TXT(60,74,"11:00",13,"var(--sub)")}`),
+
+/* --- 택시 --- */
+"driver":_sv(`${_A}<path d="M20 52V38l10-14h50l12 14h8v14"/><path d="M14 52h92"/>${_E}${_B}<circle cx="42" cy="58" r="8"/><circle cx="82" cy="58" r="8"/>${_E}${Q(56,26)}`),
+"address":_sv(`${_A}<rect x="34" y="10" width="42" height="60" rx="6"/>${_E}${_B}<path d="M44 26h22M44 36h22"/><path d="M55 56c-5-5-9-9-9-13a9 9 0 0 1 18 0c0 4-4 8-9 13z"/>${_E}${ARR(84,40,18)}`),
+"ok":_sv(`${_A}<circle cx="60" cy="40" r="26"/>${_E}${CHK(48,40)}`),
+"stophere":_sv(`${_A}<circle cx="60" cy="40" r="26"/>${_E}${TXT(60,48,"止",22)}`),
+"receipt":_sv(`${_A}<path d="M36 12h48v56l-8-6-8 6-8-6-8 6-8-6-8 6z"/>${_E}${_B}<path d="M46 28h28M46 40h28M46 52h16"/>${_E}`),
+
+/* --- 쇼핑 --- */
+"clerk":_sv(`${PERSON(40,28)}${ARR(58,38,18)}${_B}<path d="M84 26h22v20H90l-6 8v-8"/>${_E}`),
+"browse":_sv(`${_A}<path d="M22 30h20v38H22zM50 30h20v38H50zM78 30h20v38H78z"/>${_E}${_B}<circle cx="60" cy="16" r="6"/><path d="M64 20l8 6"/>${_E}`),
+"tryon":_sv(`${_A}<path d="M38 20l-14 8 6 12 8-4v28h44V36l8 4 6-12-14-8-14 6z"/>${_E}${Q(100,32)}`),
+"fitting":_sv(`${_A}<rect x="30" y="12" width="52" height="58" rx="4"/><path d="M56 12v58"/>${_E}${_B}<circle cx="50" cy="42" r="3"/><circle cx="62" cy="42" r="3"/>${_E}`),
+"sizebig":_sv(`${_A}<rect x="18" y="26" width="26" height="30" rx="3"/><rect x="56" y="16" width="46" height="50" rx="3"/>${_E}${ARR(46,42,6)}${TXT(79,46,"L",20)}`),
+"taxfree":_sv(`${_A}<circle cx="60" cy="40" r="28"/>${_E}${TXT(60,48,"免税",17)}`),
+
+/* --- 길 --- */
+"excuse":_sv(`${PERSON(34,32,"var(--accent)")}${_A}<path d="M44 26 L58 16"/>${_E}${_B}<path d="M70 16h34v22H86l-6 8v-8H70z"/>${_E}`),
+"showmap":_sv(`${_A}<path d="M22 22l24-8 28 8 24-8v48l-24 8-28-8-24 8z"/><path d="M46 14v48M74 22v48"/>${_E}${_B}<path d="M60 44c-4-4-7-7-7-10a7 7 0 0 1 14 0c0 3-3 6-7 10z"/>${_E}`),
+"straight-right":_sv(`${_A}<path d="M34 68V38h34"/><path d="M60 30l10 8-10 8"/>${_E}${_B}<path d="M20 68h68"/>${_E}`),
+"walk":_sv(`${_A}<circle cx="52" cy="18" r="7"/><path d="M52 26v20l-10 22M52 46l12 22M42 34l-10 8M52 34l14 6"/>${_E}${ARR(80,44,20)}`),
+"fivemin":_sv(`${_A}<circle cx="60" cy="40" r="26"/><path d="M60 22v18l10 6"/>${_E}${TXT(60,74,"5분",13,"var(--sub)")}`),
+
+/* --- 카페 --- */
+"cafe-counter":_sv(`${_A}<path d="M20 46h80v22H20z"/>${_E}${_B}<path d="M40 46V30h24v16"/><path d="M64 34h10a6 6 0 0 1 0 12h-10"/>${_E}${Q(84,38)}`),
+"hotcup":_sv(`${_A}<path d="M34 34h46v22a16 16 0 0 1-16 16H50a16 16 0 0 1-16-16z"/><path d="M80 40h8a8 8 0 0 1 0 16h-8"/>${_E}${_B}<path d="M46 24c0-5 5-5 5-10M62 22c0-5 5-5 5-10"/>${_E}`),
+"cupsizes":_sv(`${_A}<path d="M20 40h18l-3 26H23zM46 30h22l-4 36H50zM76 20h26l-5 46H81z"/>${_E}${Q(100,14)}`),
+"cupm":_sv(`${_A}<path d="M42 26h34l-5 44H47z"/>${_E}${TXT(59,54,"M",20)}`),
+"dinein":_sv(`${_A}<path d="M24 44h48"/><path d="M32 44v22M64 44v22"/>${_E}${_B}<path d="M84 26v18M92 26v18M88 44v22"/><circle cx="48" cy="30" r="8"/>${_E}`),
+
+/* --- 이자카야 --- */
+"drink-ask":_sv(`${_A}<path d="M34 20h34l-4 34H38z"/><path d="M40 62h24"/>${_E}${Q(84,42)}`),
+"beer":_sv(`${_A}<path d="M30 24h36v44H30z"/><path d="M66 32h12a8 8 0 0 1 0 16H66"/>${_E}${_B}<path d="M30 34h36"/><circle cx="40" cy="18" r="5"/><circle cx="52" cy="16" r="6"/><circle cx="62" cy="19" r="4"/>${_E}`),
+"yakitori":_sv(`${_A}<path d="M24 56 L96 20"/>${_E}${_B}<ellipse cx="46" cy="47" rx="9" ry="7" transform="rotate(-27 46 47)"/><ellipse cx="62" cy="39" rx="9" ry="7" transform="rotate(-27 62 39)"/><ellipse cx="78" cy="31" rx="9" ry="7" transform="rotate(-27 78 31)"/>${_E}`),
+"bill":_sv(`${_A}<path d="M36 14h48v56l-8-6-8 6-8-6-8 6-8-6-8 6z"/>${_E}${_B}<path d="M46 32h28M46 46h28"/>${_E}${TXT(60,66,"¥",15)}`),
+
+/* --- 약국 --- */
+"pharmacist":_sv(`${PERSON(38,28)}${_A}<path d="M74 22h10v10h10v10H84v10H74V42H64V32h10z"/>${_E}${Q(56,52)}`),
+"belly":_sv(`${_A}<circle cx="60" cy="20" r="10"/><path d="M60 30v20"/><path d="M46 42a14 14 0 0 0 28 0"/>${_E}${_B}<path d="M78 28c4-4 8-4 12 0M30 28c-4-4-8-4-12 0"/>${_E}`),
+"when":_sv(`${_A}<rect x="26" y="18" width="68" height="50" rx="5"/><path d="M26 34h68M44 12v12M76 12v12"/>${_E}${Q(54,58)}`),
+"yesterday":_sv(`${_A}<rect x="26" y="18" width="68" height="50" rx="5"/><path d="M26 34h68M44 12v12M76 12v12"/>${_E}${_B}<circle cx="46" cy="50" r="9"/>${_E}${ARR(60,50,20)}`),
+"medicine":_sv(`${_A}<rect x="26" y="30" width="34" height="26" rx="12"/><path d="M43 30v26"/>${_E}${ARR(66,42,14)}${_B}<path d="M86 32h16v22H86z"/>${_E}`),
+"pills":_sv(`${_B}<circle cx="30" cy="44" r="9"/><circle cx="60" cy="44" r="9"/><circle cx="90" cy="44" r="9"/>${_E}${TXT(60,22,"1일 ?회",14)}`)
+};
+const TURN_ART={"conveni": ["greet", "item", "bag-ask", "bag-no", "micro", "yes", "price", "card"], "ramen": ["howmany", "one", "guide", "callstaff", "menu", "bowl", "point-menu", "finish"], "station": ["fare", "price", "ticket-where", "machine", "platform", "platform3", "thanks"], "hotel": ["frontdesk", "name", "sayname", "passport", "handover", "clock", "clock11"], "taxi": ["driver", "address", "ok", "clock", "stophere", "receipt"], "shop": ["clerk", "browse", "tryon", "fitting", "sizebig", "taxfree", "passport"], "way": ["excuse", "showmap", "straight-right", "walk", "fivemin", "thanks"], "cafe": ["cafe-counter", "hotcup", "cupsizes", "cupm", "dinein", "yes"], "izakaya": ["drink-ask", "beer", "menu", "yakitori", "point-menu", "bill"], "pharmacy": ["pharmacist", "belly", "when", "yesterday", "medicine", "pills"]};
+function turnArt(sid,i){const a=TURN_ART[sid];return a&&TART[a[i]]?TART[a[i]]:''}
+
 
 /* ---------- state ---------- */
 const COUNTRY={
@@ -1923,9 +2040,11 @@ function closePlayer(){
 $("#p-close").onclick=closePlayer;
 function bubbleHTML(t,idx){
   const me=t.w==="me";
+  const im=turnArt(PL.s.id,idx);
   return `<div class="bub ${me?"me":"them"}">
     <span class="who">${me?"나":"상대"}</span>
     <div class="box">
+      ${im?`<div class="im">${im}</div>`:""}
       <div class="jp${lang==="jp"?" serif":""}">${t.jp}</div>
       ${t.yo?`<div class="yo">${t.yo}</div>`:""}
       <div class="pr">${t.pr}</div>
@@ -1959,9 +2078,12 @@ function stepScene(){
   }
   /* 내 차례 — 먼저 떠올리게 하고, 그다음 정답 */
   if(!PL.revealed){
+    const im=turnArt(s.id,PL.i);
     bubs.insertAdjacentHTML("beforeend",
-      `<div class="myturn" id="myturn"><div class="q">내 차례예요. 뭐라고 말할까요?</div>
-       <div class="k">${t.ko}</div></div>`);
+      `<div class="myturn" id="myturn">
+        ${im?`<div class="im">${im}</div>`:""}
+        <div class="q">내 차례예요. 뭐라고 말할까요?</div>
+        <div class="k">${t.ko}</div></div>`);
     PL.revealed=true;
     foot.innerHTML='<button class="p-btn" id="p-rev">🗣 말해봤어요 · 정답 보기</button>';
     $("#p-rev").onclick=stepScene;
