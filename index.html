@@ -203,10 +203,10 @@ section.view.on{display:block;animation:fade .18s ease}
 .abcgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
 
 /* bottom sheet */
-.scrim{position:fixed;inset:0;background:var(--scrim);z-index:60;opacity:0;pointer-events:none;transition:opacity .22s}
+.scrim{position:fixed;inset:0;background:var(--scrim);z-index:95;opacity:0;pointer-events:none;transition:opacity .22s}
 .scrim.on{opacity:1;pointer-events:auto}
 .sheet{
-  position:fixed;left:0;right:0;bottom:0;z-index:61;background:var(--panel);
+  position:fixed;left:0;right:0;bottom:0;z-index:96;background:var(--panel);
   border-radius:22px 22px 0 0;box-shadow:var(--lift);
   padding:10px var(--pad) calc(20px + env(safe-area-inset-bottom));
   transform:translateY(102%);transition:transform .26s cubic-bezier(.32,.72,0,1);
@@ -366,6 +366,112 @@ section.view.on{display:block;animation:fade .18s ease}
 @media (prefers-reduced-motion:reduce){
   *{animation-duration:.01ms!important;transition-duration:.01ms!important}
 }
+
+/* ===== 오늘의 목표 (mission) ===== */
+.mission{margin-top:14px;padding:18px;position:relative;overflow:hidden}
+.mission .mtag{font-size:10.5px;letter-spacing:.16em;font-weight:800;color:var(--accent);text-transform:uppercase}
+.mission h2{font-size:20px;margin:6px 0 4px;letter-spacing:-.02em;line-height:1.3;text-wrap:balance}
+.mission .why{color:var(--sub);font-size:13px;margin:0 0 14px;line-height:1.5}
+.mchk{display:flex;flex-direction:column;gap:10px}
+.mrow{display:flex;align-items:center;gap:11px}
+.mrow .box{
+  flex:0 0 22px;width:22px;height:22px;border-radius:7px;border:2px solid var(--line);
+  display:flex;align-items:center;justify-content:center;font-size:12px;color:transparent;
+}
+.mrow.done .box{background:var(--ok);border-color:var(--ok);color:#fff}
+.mrow .txt{flex:1;min-width:0;font-size:14px}
+.mrow.done .txt{color:var(--sub);text-decoration:line-through}
+.mrow .pg{font-size:12px;color:var(--sub);font-variant-numeric:tabular-nums;font-weight:700}
+.mbar{height:5px;background:var(--panel2);border-radius:99px;overflow:hidden;margin-top:12px}
+.mbar i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .4s ease}
+.mcta{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:14px}
+.mission.clear{background:linear-gradient(160deg,var(--ok-soft),var(--panel) 60%)}
+.mission .cleartag{
+  display:inline-flex;align-items:center;gap:6px;background:var(--ok);color:#fff;
+  border-radius:999px;padding:5px 12px;font-size:12px;font-weight:800;margin-bottom:8px;
+}
+
+/* ===== 상황극 목록 ===== */
+.scenelist{display:flex;flex-direction:column;gap:11px}
+.scard{
+  display:flex;gap:13px;align-items:center;text-align:left;width:100%;
+  background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:13px;box-shadow:var(--shadow);
+}
+.scard .art{
+  flex:0 0 78px;height:60px;border-radius:11px;background:var(--accent-soft);
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+}
+.scard .art svg{width:88%;height:88%}
+.scard .in{flex:1;min-width:0}
+.scard .pl{font-size:10.5px;letter-spacing:.08em;color:var(--sub);font-weight:700}
+.scard b{display:block;font-size:15.5px;margin:2px 0 2px;letter-spacing:-.01em}
+.scard .gl{font-size:12.5px;color:var(--sub);line-height:1.45}
+.scard .ok{flex:0 0 auto;color:var(--ok);font-size:17px}
+
+/* ===== 상황극 플레이어 ===== */
+.player{position:fixed;inset:0;z-index:80;background:var(--bg);display:none;flex-direction:column;padding:env(safe-area-inset-top) 0 0}
+.player.on{display:flex}
+.p-top{display:flex;align-items:center;gap:12px;padding:12px var(--pad) 8px}
+.p-top .ttl{flex:1;min-width:0;font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.p-body{flex:1;overflow-y:auto;padding:0 var(--pad) 16px}
+.p-art{
+  background:var(--accent-soft);border-radius:16px;padding:10px;display:flex;
+  align-items:center;justify-content:center;margin-bottom:12px;
+}
+.p-art svg{width:100%;max-width:280px;height:auto}
+.p-goal{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:13px 14px;margin-bottom:10px;box-shadow:var(--shadow)}
+.p-goal .lb{font-size:10.5px;letter-spacing:.14em;font-weight:800;color:var(--accent);text-transform:uppercase}
+.p-goal p{margin:4px 0 0;font-size:14px;font-weight:600}
+.p-tip{background:var(--warn-soft);border-radius:12px;padding:11px 13px;font-size:12.5px;line-height:1.55;margin-bottom:16px}
+.bubs{display:flex;flex-direction:column;gap:12px}
+.bub{max-width:88%;display:flex;flex-direction:column;gap:2px;animation:pop .22s ease}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.bub .who{font-size:10.5px;font-weight:800;letter-spacing:.06em;color:var(--sub);margin-bottom:3px}
+.bub .box{border-radius:15px;padding:12px 14px;position:relative}
+.bub.them{align-self:flex-start}
+.bub.them .box{background:var(--panel);border:1px solid var(--line);border-bottom-left-radius:5px}
+.bub.me{align-self:flex-end;align-items:flex-end}
+.bub.me .who{color:var(--accent)}
+.bub.me .box{background:var(--accent);color:var(--accent-ink);border-bottom-right-radius:5px}
+.bub .jp{font-size:18px;line-height:1.45;word-break:keep-all}
+.bub .yo{font-size:11.5px;opacity:.72;margin-top:2px}
+.bub .pr{font-size:13.5px;font-weight:700;margin-top:5px;color:var(--accent)}
+.bub.me .pr{color:var(--accent-ink);opacity:.92}
+.bub .ko{font-size:13px;margin-top:3px;opacity:.75}
+.bub .acts{display:flex;gap:6px;margin-top:9px}
+.bub .acts button{
+  border:1px solid var(--line);background:var(--panel2);color:var(--ink);
+  border-radius:999px;padding:6px 12px;font-size:11.5px;font-weight:700;
+}
+.bub.me .acts button{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.3);color:var(--accent-ink)}
+.myturn{
+  align-self:flex-end;background:var(--panel2);border:1px dashed var(--line);border-radius:15px;
+  padding:14px 16px;text-align:center;max-width:88%;
+}
+.myturn .q{font-size:13px;color:var(--sub)}
+.myturn .k{font-size:16px;font-weight:700;margin-top:4px;word-break:keep-all}
+.p-foot{padding:10px var(--pad) calc(14px + env(safe-area-inset-bottom));border-top:1px solid var(--line);background:var(--panel)}
+.p-btn{width:100%;border:0;border-radius:14px;background:var(--accent);color:var(--accent-ink);padding:16px;font-size:16px;font-weight:800}
+.p-btn.mute{background:var(--panel2);color:var(--sub)}
+.p-done{text-align:center;padding:26px 10px 10px}
+.p-done .em{font-size:46px}
+.p-done h3{font-size:20px;margin:8px 0 4px}
+.p-done p{color:var(--sub);font-size:13.5px;margin:0}
+
+/* 유의표현 시트 */
+.altlist{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.altitem{background:var(--panel2);border-radius:13px;padding:13px 14px}
+.altitem .jp{font-size:17px;line-height:1.45}
+.altitem .pr{font-size:13.5px;color:var(--accent);font-weight:700;margin-top:4px}
+.altitem .ko{font-size:13px;color:var(--sub);margin-top:2px}
+.altitem .note{font-size:12px;color:var(--sub);margin-top:7px;padding-top:7px;border-top:1px dashed var(--line);line-height:1.5}
+.altitem .say{
+  margin-top:9px;border:1px solid var(--line);background:var(--panel);border-radius:999px;
+  padding:6px 13px;font-size:12px;font-weight:700;
+}
+.sh-title{font-size:12px;letter-spacing:.1em;font-weight:800;color:var(--sub);text-transform:uppercase}
+.sh-main{font-size:20px;line-height:1.4;margin:6px 0 0;word-break:keep-all}
+.sh-mainpr{font-size:14px;color:var(--accent);font-weight:700;margin-top:4px}
 </style>
 
 <header class="top">
@@ -380,6 +486,8 @@ section.view.on{display:block;animation:fade .18s ease}
 <!-- ============ TODAY ============ -->
 <section class="view" id="view-today">
   <div class="tripstrip" id="tripstrip"></div>
+
+  <div class="card mission" id="mission"></div>
 
   <div class="card todaycard">
     <h2 id="tc-title">오늘의 학습</h2>
@@ -468,6 +576,13 @@ section.view.on{display:block;animation:fade .18s ease}
   <div class="card pad"><div class="charpick" id="charpick"></div></div>
 </section>
 
+<!-- ============ SCENES ============ -->
+<section class="view" id="view-scenes">
+  <h1 id="sc-title"></h1>
+  <p class="lead" id="sc-lead"></p>
+  <div class="scenelist" id="scenelist"></div>
+</section>
+
 <!-- ============ PHRASES ============ -->
 <section class="view" id="view-phrases">
   <h1 id="ph-title"></h1>
@@ -488,6 +603,16 @@ section.view.on{display:block;animation:fade .18s ease}
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="글자 상세">
   <div class="grip"></div>
   <div id="sheet-body"></div>
+</div>
+
+<!-- ============ scene player ============ -->
+<div class="player" id="player" role="dialog" aria-modal="true" aria-label="상황극">
+  <div class="p-top">
+    <button class="s-x" id="p-close" aria-label="닫기">✕</button>
+    <span class="ttl" id="p-title"></span>
+  </div>
+  <div class="p-body" id="p-body"></div>
+  <div class="p-foot" id="p-foot"></div>
 </div>
 
 <!-- ============ study session ============ -->
@@ -900,6 +1025,236 @@ const CONFUSE={
 "き":["さ","き = さ + 가로획 하나"]
 };
 
+/* ---------- 상황극 삽화 (인라인 SVG · 오프라인 안전) ---------- */
+const ART={
+conveni:`<svg viewBox="0 0 200 120" aria-hidden="true"><g fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<path d="M22 46h156M30 46l8-18h124l8 18"/><path d="M34 46v56h132V46"/><path d="M34 74h132"/>
+<path d="M56 74v28M100 74v28"/></g>
+<g fill="none" stroke="var(--sub)" stroke-width="2.4" stroke-linecap="round"><path d="M46 28v18M70 28v18M94 28v18M118 28v18M142 28v18"/>
+<rect x="118" y="82" width="30" height="20" rx="3"/><path d="M124 82v-9a5 5 0 0 1 10 0v9"/></g>
+<g fill="none" stroke="var(--sub)" stroke-width="2.4" stroke-linecap="round"><path d="M64 60h20M64 66h13"/></g></svg>`,
+ramen:`<svg viewBox="0 0 200 120" aria-hidden="true"><g fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<path d="M46 58h108a54 54 0 0 1-54 44 54 54 0 0 1-54-44z"/><path d="M38 58h124"/><path d="M74 102h52"/></g>
+<g fill="none" stroke="var(--sub)" stroke-width="2.4" stroke-linecap="round"><path d="M72 44c0-8 8-8 8-16M100 40c0-8 8-8 8-16M128 44c0-8 8-8 8-16"/>
+<path d="M132 30 176 18M136 38 180 26"/><circle cx="82" cy="70" r="7"/><path d="M108 66h22"/></g></svg>`,
+station:`<svg viewBox="0 0 200 120" aria-hidden="true"><g fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<rect x="40" y="14" width="120" height="92" rx="8"/><rect x="54" y="26" width="92" height="30" rx="4"/></g>
+<g fill="none" stroke="var(--sub)" stroke-width="2.4" stroke-linecap="round">
+<circle cx="66" cy="72" r="6"/><circle cx="88" cy="72" r="6"/><circle cx="110" cy="72" r="6"/><circle cx="132" cy="72" r="6"/>
+<rect x="66" y="88" width="40" height="10" rx="2"/><path d="M64 36h30M64 46h52"/></g></svg>`,
+hotel:`<svg viewBox="0 0 200 120" aria-hidden="true"><g fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<path d="M28 78h144v26H28z"/><path d="M40 78V56h120v22"/></g>
+<g fill="none" stroke="var(--sub)" stroke-width="2.4" stroke-linecap="round">
+<path d="M62 56a12 12 0 0 1 24 0"/><path d="M58 56h32M74 44v-6"/>
+<circle cx="122" cy="60" r="7"/><path d="M129 60h22M145 60v7M151 60v7"/></g></svg>`,
+taxi:`<svg viewBox="0 0 200 120" aria-hidden="true"><g fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<path d="M26 82V62l16-22h84l20 22h28v20"/><path d="M20 82h160"/></g>
+<g fill="none" stroke="var(--sub)" stroke-width="2.4" stroke-linecap="round">
+<circle cx="60" cy="86" r="12"/><circle cx="140" cy="86" r="12"/>
+<rect x="66" y="26" width="34" height="14" rx="3"/><path d="M52 62h34V44M96 62h34l-14-18h-20z"/></g></svg>`,
+shop:`<svg viewBox="0 0 200 120" aria-hidden="true"><g fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<path d="M56 42h88l10 66H46z"/><path d="M78 42V28a22 22 0 0 1 44 0v14"/></g>
+<g fill="none" stroke="var(--sub)" stroke-width="2.4" stroke-linecap="round">
+<path d="M84 66h32M84 78h22"/><circle cx="128" cy="84" r="3"/></g></svg>`,
+way:`<svg viewBox="0 0 200 120" aria-hidden="true"><g fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<path d="M96 106V26"/><path d="M96 34h56l12 12-12 12H96z"/><path d="M96 68H40l-12 12 12 12h56z"/></g>
+<g fill="none" stroke="var(--sub)" stroke-width="2.4" stroke-linecap="round"><path d="M112 46h30M52 80h30"/><path d="M74 106h48"/></g></svg>`,
+cafe:`<svg viewBox="0 0 200 120" aria-hidden="true"><g fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<path d="M52 50h84v34a26 26 0 0 1-26 26H78a26 26 0 0 1-26-26z"/><path d="M136 58h14a14 14 0 0 1 0 28h-14"/></g>
+<g fill="none" stroke="var(--sub)" stroke-width="2.4" stroke-linecap="round"><path d="M74 36c0-8 8-8 8-16M96 32c0-8 8-8 8-16M118 36c0-8 8-8 8-16"/>
+<path d="M52 72h84"/></g></svg>`,
+izakaya:`<svg viewBox="0 0 200 120" aria-hidden="true"><g fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<ellipse cx="100" cy="62" rx="34" ry="40"/><path d="M100 22v-8M100 102v8"/></g>
+<g fill="none" stroke="var(--sub)" stroke-width="2.4" stroke-linecap="round">
+<path d="M68 44h64M66 62h68M68 80h64"/><path d="M24 24h44M132 24h44"/></g></svg>`,
+pharmacy:`<svg viewBox="0 0 200 120" aria-hidden="true"><g fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<path d="M84 20h32v28h28v32h-28v28H84V80H56V48h28z"/></g>
+<g fill="none" stroke="var(--sub)" stroke-width="2.4" stroke-linecap="round">
+<rect x="24" y="86" width="34" height="22" rx="10"/><path d="M41 86v22"/>
+<rect x="146" y="86" width="30" height="22" rx="4"/><path d="M146 96h30"/></g></svg>`
+};
+
+/* ---------- 상황극 시나리오 ----------
+   turns: w = me(내 차례) / them(상대) , alt = 같은 뜻 다른 표현 */
+const SCENES=[
+{id:"conveni",cat:"shop",title:"편의점에서 계산하기",place:"コンビニ",art:"conveni",
+ goal:"봉투 여부에 답하고 계산 끝내기",
+ tip:"봉투는 유료(3~5엔)예요. 필요 없으면 いりません 한마디면 됩니다. 데울지 묻는 질문도 자주 나와요.",
+ turns:[
+ {w:"them",jp:"いらっしゃいませ。",pr:"이랏샤이마세",ko:"어서 오세요.",
+  alt:[{jp:"いらっしゃいませ、こんにちは。",pr:"이랏샤이마세, 곤니치와",ko:"어서 오세요, 안녕하세요.",note:"낮에 자주 붙여 말해요"}]},
+ {w:"me",jp:"これ、お願いします。",pr:"코레, 오네가이시마스",ko:"이거 주세요.",
+  alt:[{jp:"これください。",pr:"코레 쿠다사이",ko:"이거 주세요.",note:"가장 짧고 무난"},
+       {jp:"これで。",pr:"코레데",ko:"이걸로요.",note:"아주 캐주얼, 계산대에서만"}]},
+ {w:"them",jp:"袋はご利用ですか？",pr:"후쿠로와 고리요-데스카",ko:"봉투 필요하세요?",yo:"ふくろは ごりようですか",
+  alt:[{jp:"レジ袋いりますか？",pr:"레지부쿠로 이리마스카",ko:"봉투 필요하세요?",note:"더 캐주얼한 표현"}]},
+ {w:"me",jp:"いりません。",pr:"이리마셍",ko:"괜찮습니다. (필요 없어요)",
+  alt:[{jp:"大丈夫です。",pr:"다이죠-부데스",ko:"괜찮아요.",note:"거절할 때 가장 부드러움"},
+       {jp:"お願いします。",pr:"오네가이시마스",ko:"주세요.",note:"반대로 필요할 때"}]},
+ {w:"them",jp:"温めますか？",pr:"아타타메마스카",ko:"데워 드릴까요?",yo:"あたためますか",
+  alt:[{jp:"チンしますか？",pr:"친 시마스카",ko:"데울까요?",note:"아주 구어적"}]},
+ {w:"me",jp:"はい、お願いします。",pr:"하이, 오네가이시마스",ko:"네, 부탁드려요.",
+  alt:[{jp:"いえ、そのままで。",pr:"이에, 소노마마데",ko:"아니요, 그대로 주세요.",note:"데우지 않을 때"}]},
+ {w:"them",jp:"580円になります。",pr:"고햐쿠하치쥬-엔니 나리마스",ko:"580엔입니다.",yo:"580えんに なります"},
+ {w:"me",jp:"カードで払えますか？",pr:"카-도데 하라에마스카",ko:"카드로 계산되나요?",yo:"カードで はらえますか",
+  alt:[{jp:"カードで。",pr:"카-도데",ko:"카드로요.",note:"짧게"},
+       {jp:"現金でお願いします。",pr:"겡킨데 오네가이시마스",ko:"현금으로 할게요.",note:"현금일 때"}]}
+]},
+
+{id:"ramen",cat:"food",title:"라멘집에서 주문하기",place:"ラーメン屋",art:"ramen",
+ goal:"자리 안내받고 주문까지 마치기",
+ tip:"식권 자판기(券売機)가 있는 집이 많아요. 그럴 땐 먼저 표를 사서 건네면 됩니다.",
+ turns:[
+ {w:"them",jp:"何名様ですか？",pr:"난메-사마데스카",ko:"몇 분이세요?",yo:"なんめいさまですか"},
+ {w:"me",jp:"一人です。",pr:"히토리데스",ko:"한 명이요.",yo:"ひとりです",
+  alt:[{jp:"二人です。",pr:"후타리데스",ko:"두 명이요.",note:"두 명일 때"},
+       {jp:"一人、大丈夫ですか？",pr:"히토리, 다이죠-부데스카",ko:"혼자인데 괜찮나요?",note:"자리 확인"}]},
+ {w:"them",jp:"こちらへどうぞ。",pr:"코치라에 도-조",ko:"이쪽으로 오세요.",
+  alt:[{jp:"少々お待ちください。",pr:"쇼-쇼- 오마치쿠다사이",ko:"잠시만 기다려 주세요.",note:"자리가 없을 때"}]},
+ {w:"me",jp:"すみません、注文お願いします。",pr:"스미마셍, 츄-몬 오네가이시마스",ko:"저기요, 주문할게요.",yo:"すみません、ちゅうもん おねがいします",
+  alt:[{jp:"すみません！",pr:"스미마셍",ko:"저기요!",note:"손 들고 이것만 해도 충분"}]},
+ {w:"me",jp:"おすすめは何ですか？",pr:"오스스메와 난데스카",ko:"추천 메뉴가 뭐예요?",yo:"おすすめは なんですか",
+  alt:[{jp:"人気なのはどれですか？",pr:"닌키나노와 도레데스카",ko:"인기 있는 건 뭐예요?",note:"비슷한 뜻"}]},
+ {w:"them",jp:"当店は醤油ラーメンが人気です。",pr:"토-텐와 쇼-유 라-멘가 닌키데스",ko:"저희는 간장라멘이 인기예요.",yo:"とうてんは しょうゆラーメンが にんきです"},
+ {w:"me",jp:"じゃあ、それをください。",pr:"쟈-, 소레오 쿠다사이",ko:"그럼 그걸로 주세요.",
+  alt:[{jp:"それにします。",pr:"소레니 시마스",ko:"그걸로 할게요.",note:"자연스러운 결정 표현"}]},
+ {w:"me",jp:"ごちそうさまでした。",pr:"고치소-사마데시타",ko:"잘 먹었습니다.",
+  alt:[{jp:"とても美味しかったです。",pr:"토테모 오이시캇타데스",ko:"정말 맛있었어요.",note:"칭찬까지 덧붙일 때"}]}
+]},
+
+{id:"station",cat:"transit",title:"역에서 표 사고 길 찾기",place:"駅",art:"station",
+ goal:"목적지까지 표를 사고 승강장 확인하기",
+ tip:"역 이름 뒤에 まで(마데)만 붙이면 '~까지'가 됩니다. IC카드는 충전(チャージ)해서 쓰면 편해요.",
+ turns:[
+ {w:"me",jp:"すみません、渋谷までいくらですか？",pr:"스미마셍, 시부야마데 이쿠라데스카",ko:"저기요, 시부야까지 얼마예요?",yo:"すみません、しぶやまで いくらですか"},
+ {w:"them",jp:"280円です。",pr:"니햐쿠하치쥬-엔데스",ko:"280엔입니다.",yo:"280えんです"},
+ {w:"me",jp:"切符はどこで買えますか？",pr:"킷푸와 도코데 카에마스카",ko:"표는 어디서 사나요?",yo:"きっぷは どこで かえますか",
+  alt:[{jp:"券売機はどこですか？",pr:"켐바이키와 도코데스카",ko:"발권기는 어디예요?",note:"기계를 콕 집어 물을 때"},
+       {jp:"ICカードにチャージしたいです。",pr:"IC카-도니 챠-지 시타이데스",ko:"교통카드 충전하고 싶어요.",note:"충전할 때"}]},
+ {w:"them",jp:"あちらの券売機でどうぞ。",pr:"아치라노 켐바이키데 도-조",ko:"저쪽 발권기에서 하세요.",yo:"あちらの けんばいきで どうぞ"},
+ {w:"me",jp:"何番線ですか？",pr:"남반센데스카",ko:"몇 번 승강장이에요?",yo:"なんばんせんですか",
+  alt:[{jp:"どのホームですか？",pr:"도노 호-무데스카",ko:"어느 플랫폼이에요?",note:"같은 뜻, 더 쉬운 말"}]},
+ {w:"them",jp:"3番線です。",pr:"삼반센데스",ko:"3번 승강장이에요.",yo:"3ばんせんです"},
+ {w:"me",jp:"ありがとうございます。",pr:"아리가토- 고자이마스",ko:"감사합니다.",
+  alt:[{jp:"助かりました。",pr:"타스카리마시타",ko:"덕분에 살았어요.",note:"도움받았을 때 자연스러움"}]}
+]},
+
+{id:"hotel",cat:"hotel",title:"호텔 체크인하기",place:"ホテル",art:"hotel",
+ goal:"예약 확인하고 체크아웃 시간까지 듣기",
+ tip:"予約した(요야쿠시타) + 이름만 말하면 대부분 통합니다. 짐 보관은 대개 무료예요.",
+ turns:[
+ {w:"me",jp:"チェックインをお願いします。",pr:"체쿠인오 오네가이시마스",ko:"체크인 부탁드려요.",
+  alt:[{jp:"チェックインできますか？",pr:"체쿠인 데키마스카",ko:"체크인 되나요?",note:"이른 시간에 도착했을 때"}]},
+ {w:"them",jp:"お名前をお願いします。",pr:"오나마에오 오네가이시마스",ko:"성함 부탁드립니다.",yo:"おなまえを おねがいします"},
+ {w:"me",jp:"予約したキムです。",pr:"요야쿠시타 키무데스",ko:"예약한 김입니다.",yo:"よやくした キムです",
+  alt:[{jp:"キムで予約しています。",pr:"키무데 요야쿠시테이마스",ko:"김으로 예약했어요.",note:"같은 뜻"}]},
+ {w:"them",jp:"パスポートを見せてください。",pr:"파스포-토오 미세테 쿠다사이",ko:"여권을 보여 주세요."},
+ {w:"me",jp:"はい、どうぞ。",pr:"하이, 도-조",ko:"네, 여기요."},
+ {w:"me",jp:"チェックアウトは何時ですか？",pr:"체쿠아우토와 난지데스카",ko:"체크아웃은 몇 시예요?",yo:"チェックアウトは なんじですか",
+  alt:[{jp:"荷物を預かってもらえますか？",pr:"니모츠오 아즈캇테 모라에마스카",ko:"짐 좀 맡아 주시겠어요?",note:"체크인 전/후 짐 맡길 때"}]},
+ {w:"them",jp:"11時までです。",pr:"쥬-이치지마데데스",ko:"11시까지입니다.",yo:"11じまでです"}
+]},
+
+{id:"taxi",cat:"transit",title:"택시 타기",place:"タクシー",art:"taxi",
+ goal:"목적지 전달하고 내릴 곳 말하기",
+ tip:"일본 택시 문은 자동으로 열립니다. 손대지 마세요! 주소를 보여주는 게 가장 확실해요.",
+ turns:[
+ {w:"them",jp:"どちらまでですか？",pr:"도치라마데데스카",ko:"어디까지 가세요?"},
+ {w:"me",jp:"この住所までお願いします。",pr:"코노 쥬-쇼마데 오네가이시마스",ko:"이 주소로 가 주세요.",yo:"この じゅうしょまで おねがいします",
+  alt:[{jp:"東京駅までお願いします。",pr:"토-쿄-에키마데 오네가이시마스",ko:"도쿄역까지 가 주세요.",note:"장소 이름을 말할 때"},
+       {jp:"ここへ行ってください。",pr:"코코에 잇테 쿠다사이",ko:"여기로 가 주세요.",note:"지도를 보여주며"}]},
+ {w:"them",jp:"かしこまりました。",pr:"카시코마리마시타",ko:"알겠습니다."},
+ {w:"me",jp:"どのくらいかかりますか？",pr:"도노쿠라이 카카리마스카",ko:"얼마나 걸리나요?",
+  alt:[{jp:"何分くらいですか？",pr:"남뿐쿠라이데스카",ko:"몇 분쯤 걸려요?",note:"시간만 물을 때"}]},
+ {w:"me",jp:"ここで降ります。",pr:"코코데 오리마스",ko:"여기서 내릴게요.",yo:"ここで おります",
+  alt:[{jp:"あそこで止めてください。",pr:"아소코데 토메테 쿠다사이",ko:"저기서 세워 주세요.",note:"위치를 가리키며"}]},
+ {w:"me",jp:"領収書をください。",pr:"료-슈-쇼오 쿠다사이",ko:"영수증 주세요.",yo:"りょうしゅうしょを ください"}
+]},
+
+{id:"shop",cat:"shop",title:"옷 가게에서 사기",place:"お店",art:"shop",
+ goal:"사이즈 확인하고 면세까지 받기",
+ tip:"5,500엔 이상이면 면세 가능한 곳이 많아요. 여권을 꼭 챙기세요.",
+ turns:[
+ {w:"them",jp:"何かお探しですか？",pr:"나니카 오사가시데스카",ko:"찾으시는 거 있으세요?",yo:"なにか おさがしですか"},
+ {w:"me",jp:"見ているだけです。",pr:"미테이루 다케데스",ko:"그냥 구경하는 거예요.",yo:"みている だけです",
+  alt:[{jp:"ちょっと見ています。",pr:"춋토 미테이마스",ko:"좀 둘러보고 있어요.",note:"더 부드러움"}]},
+ {w:"me",jp:"これ、試着できますか？",pr:"코레, 시챠쿠 데키마스카",ko:"이거 입어 봐도 되나요?",yo:"これ、しちゃく できますか",
+  alt:[{jp:"着てみてもいいですか？",pr:"키테미테모 이-데스카",ko:"입어 봐도 될까요?",note:"쉬운 표현"}]},
+ {w:"them",jp:"はい、こちらへどうぞ。",pr:"하이, 코치라에 도-조",ko:"네, 이쪽으로 오세요."},
+ {w:"me",jp:"もっと大きいサイズはありますか？",pr:"못토 오-키- 사이즈와 아리마스카",ko:"더 큰 사이즈 있나요?",yo:"もっと おおきい サイズは ありますか",
+  alt:[{jp:"Mサイズはありますか？",pr:"에무 사이즈와 아리마스카",ko:"M 사이즈 있나요?",note:"사이즈를 콕 집어서"},
+       {jp:"他の色はありますか？",pr:"호카노 이로와 아리마스카",ko:"다른 색 있나요?",note:"색을 물을 때"}]},
+ {w:"me",jp:"これにします。免税できますか？",pr:"코레니 시마스. 멘제- 데키마스카",ko:"이걸로 할게요. 면세 되나요?",yo:"これにします。めんぜい できますか"},
+ {w:"them",jp:"パスポートはお持ちですか？",pr:"파스포-토와 오모치데스카",ko:"여권 가지고 계세요?"}
+]},
+
+{id:"way",cat:"way",title:"길 물어보기",place:"道",art:"way",
+ goal:"목적지 위치와 걸리는 시간 알아내기",
+ tip:"지도 앱을 보여주면서 물어보면 훨씬 잘 통합니다. 편의점 직원이나 역무원이 친절해요.",
+ turns:[
+ {w:"me",jp:"すみません、ちょっといいですか？",pr:"스미마셍, 춋토 이-데스카",ko:"저기요, 잠깐 괜찮을까요?",
+  alt:[{jp:"すみません。",pr:"스미마셍",ko:"저기요.",note:"이것만으로도 충분"}]},
+ {w:"me",jp:"この場所はどこですか？",pr:"코노 바쇼와 도코데스카",ko:"이 장소가 어디예요?",yo:"この ばしょは どこですか",
+  alt:[{jp:"駅はどこですか？",pr:"에키와 도코데스카",ko:"역은 어디예요?",note:"장소를 바꿔 넣으면 됨"},
+       {jp:"地図で教えてもらえますか？",pr:"치즈데 오시에테 모라에마스카",ko:"지도로 알려 주시겠어요?",note:"지도를 내밀며"}]},
+ {w:"them",jp:"まっすぐ行って、右です。",pr:"맛스구 잇테, 미기데스",ko:"쭉 가서 오른쪽이에요.",yo:"まっすぐ いって、みぎです"},
+ {w:"me",jp:"歩いて行けますか？",pr:"아루이테 이케마스카",ko:"걸어서 갈 수 있나요?",yo:"あるいて いけますか",
+  alt:[{jp:"ここから近いですか？",pr:"코코카라 치카이데스카",ko:"여기서 가까워요?",note:"거리를 물을 때"}]},
+ {w:"them",jp:"はい、5分くらいです。",pr:"하이, 고훈쿠라이데스",ko:"네, 5분 정도예요.",yo:"はい、5ふんくらいです"},
+ {w:"me",jp:"ありがとうございました。",pr:"아리가토- 고자이마시타",ko:"감사했습니다.",
+  alt:[{jp:"助かりました。",pr:"타스카리마시타",ko:"덕분에 살았어요.",note:"진심을 담을 때"}]}
+]},
+
+{id:"cafe",cat:"food",title:"카페에서 주문하기",place:"カフェ",art:"cafe",
+ goal:"사이즈·매장/포장까지 정해서 주문하기",
+ tip:"店内で(텐나이데)는 매장에서, 持ち帰り(모치카에리)는 포장이에요.",
+ turns:[
+ {w:"them",jp:"ご注文はお決まりですか？",pr:"고츄-몬와 오키마리데스카",ko:"주문 정하셨나요?",yo:"ごちゅうもんは おきまりですか"},
+ {w:"me",jp:"ホットコーヒーをください。",pr:"홋토 코-히-오 쿠다사이",ko:"따뜻한 커피 주세요.",
+  alt:[{jp:"アイスコーヒーをお願いします。",pr:"아이스 코-히-오 오네가이시마스",ko:"아이스 커피 주세요.",note:"차가운 것"},
+       {jp:"これをひとつ。",pr:"코레오 히토츠",ko:"이거 하나요.",note:"메뉴를 가리키며"}]},
+ {w:"them",jp:"サイズはいかがなさいますか？",pr:"사이즈와 이카가 나사이마스카",ko:"사이즈는 어떻게 하시겠어요?"},
+ {w:"me",jp:"Mサイズでお願いします。",pr:"에무 사이즈데 오네가이시마스",ko:"M 사이즈로 주세요.",
+  alt:[{jp:"一番小さいのでいいです。",pr:"이치반 치-사이노데 이-데스",ko:"제일 작은 걸로 괜찮아요.",note:"사이즈 이름을 모를 때"}]},
+ {w:"them",jp:"店内でお召し上がりですか？",pr:"텐나이데 오메시아가리데스카",ko:"매장에서 드시나요?",yo:"てんないで おめしあがりですか"},
+ {w:"me",jp:"はい、店内で。",pr:"하이, 텐나이데",ko:"네, 여기서 먹을게요.",yo:"はい、てんないで",
+  alt:[{jp:"持ち帰りで。",pr:"모치카에리데",ko:"포장이요.",note:"테이크아웃"}]}
+]},
+
+{id:"izakaya",cat:"food",title:"이자카야에서 한잔",place:"居酒屋",art:"izakaya",
+ goal:"음료 주문하고 추천 안주까지 시키기",
+ tip:"자리에 앉으면 나오는 작은 안주(お通し)는 자릿세 개념으로 유료입니다.",
+ turns:[
+ {w:"them",jp:"お飲み物は何にしますか？",pr:"오노미모노와 나니니 시마스카",ko:"음료는 뭘로 하시겠어요?",yo:"おのみものは なにに しますか"},
+ {w:"me",jp:"生ビールをひとつ。",pr:"나마비-루오 히토츠",ko:"생맥주 하나요.",yo:"なまビールを ひとつ",
+  alt:[{jp:"ウーロン茶をください。",pr:"우-롱챠오 쿠다사이",ko:"우롱차 주세요.",note:"술을 안 마실 때"},
+       {jp:"同じものを。",pr:"오나지 모노오",ko:"같은 걸로요.",note:"일행과 같은 것"}]},
+ {w:"me",jp:"おすすめの料理はありますか？",pr:"오스스메노 료-리와 아리마스카",ko:"추천 요리 있나요?",yo:"おすすめの りょうりは ありますか"},
+ {w:"them",jp:"焼き鳥がおすすめです。",pr:"야키토리가 오스스메데스",ko:"야키토리를 추천드려요.",yo:"やきとりが おすすめです"},
+ {w:"me",jp:"じゃあ、それをお願いします。",pr:"쟈-, 소레오 오네가이시마스",ko:"그럼 그걸로 주세요.",
+  alt:[{jp:"とりあえずそれで。",pr:"토리아에즈 소레데",ko:"우선 그걸로요.",note:"일단 시키고 더 볼 때"}]},
+ {w:"me",jp:"お会計お願いします。",pr:"오카이케- 오네가이시마스",ko:"계산해 주세요.",yo:"おかいけい おねがいします",
+  alt:[{jp:"別々でできますか？",pr:"베츠베츠데 데키마스카",ko:"따로 계산 되나요?",note:"각자 낼 때"}]}
+]},
+
+{id:"pharmacy",cat:"help",title:"약국에서 약 사기",place:"薬局",art:"pharmacy",
+ goal:"증상 말하고 약 받기",
+ tip:"ドラッグストア에서 웬만한 상비약은 다 삽니다. 증상 부위 + 痛い(이타이)면 통해요.",
+ turns:[
+ {w:"them",jp:"どうされましたか？",pr:"도- 사레마시타카",ko:"어디가 불편하세요?"},
+ {w:"me",jp:"お腹が痛いです。",pr:"오나카가 이타이데스",ko:"배가 아파요.",yo:"おなかが いたいです",
+  alt:[{jp:"頭が痛いです。",pr:"아타마가 이타이데스",ko:"머리가 아파요.",note:"부위만 바꾸면 됨"},
+       {jp:"風邪をひきました。",pr:"카제오 히키마시타",ko:"감기에 걸렸어요.",note:"감기일 때"}]},
+ {w:"them",jp:"いつからですか？",pr:"이츠카라데스카",ko:"언제부터요?"},
+ {w:"me",jp:"昨日からです。",pr:"키노-카라데스",ko:"어제부터요.",yo:"きのうからです",
+  alt:[{jp:"今朝からです。",pr:"케사카라데스",ko:"오늘 아침부터요.",note:"시점만 바꾸기"}]},
+ {w:"them",jp:"こちらのお薬をどうぞ。",pr:"코치라노 오쿠스리오 도-조",ko:"이 약을 드세요.",yo:"こちらの おくすりを どうぞ"},
+ {w:"me",jp:"一日何回飲みますか？",pr:"이치니치 낭카이 노미마스카",ko:"하루에 몇 번 먹나요?",yo:"いちにち なんかい のみますか",
+  alt:[{jp:"食後ですか？",pr:"쇼쿠고데스카",ko:"식후인가요?",note:"복용 시점 확인"}]}
+]}
+];
+const sceneById=id=>SCENES.find(s=>s.id===id);
+
 /* ---------- state ---------- */
 const COUNTRY={
   jp:{flag:"🇯🇵",name:"일본",lang:"일본어",tts:"ja-JP",mk:"あ"},
@@ -999,9 +1354,10 @@ function renderLangSw(){
 const ICON={
   today:'<svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="16" rx="3"/><path d="M8 3v4M16 3v4M3.5 10h17"/><circle cx="12" cy="15.5" r="1.6" fill="currentColor" stroke="none"/></svg>',
   write:'<svg viewBox="0 0 24 24"><path d="M15.2 4.6 19.4 8.8"/><path d="M17 3.2a2 2 0 0 1 2.8 2.8L8.4 17.4 3.6 20.4l3-4.8z"/></svg>',
-  phrases:'<svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-8.9 8.4 8.6 8.6 0 0 1-3.4-.7L3 21l1.8-4.6A8.4 8.4 0 1 1 21 11.5z"/></svg>'
+  phrases:'<svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-8.9 8.4 8.6 8.6 0 0 1-3.4-.7L3 21l1.8-4.6A8.4 8.4 0 1 1 21 11.5z"/></svg>',
+  scenes:'<svg viewBox="0 0 24 24"><path d="M14.5 4h5a1.5 1.5 0 0 1 1.5 1.5v6a1.5 1.5 0 0 1-1.5 1.5H19v2.5L16 13h-1.5A1.5 1.5 0 0 1 13 11.5v-6A1.5 1.5 0 0 1 14.5 4z"/><path d="M10 9H4.5A1.5 1.5 0 0 0 3 10.5v6A1.5 1.5 0 0 0 4.5 18H5v2.5L8 18h2.5a1.5 1.5 0 0 0 1.5-1.5V15"/></svg>'
 };
-const TABS=[["today","오늘"],["letters","문자"],["write","쓰기"],["phrases","회화"]];
+const TABS=[["today","오늘"],["letters","문자"],["write","쓰기"],["scenes","상황"],["phrases","회화"]];
 let tab=store.get("tab","today");
 function tabIcon(id){
   if(id==="letters")return `<span class="serif">${COUNTRY[lang].mk}</span>`;
@@ -1010,7 +1366,7 @@ function tabIcon(id){
 function renderTabs(){
   const due=dueIds(Date.now()).length;
   $("#botnav").innerHTML=TABS.map(([id,name])=>{
-    if(id==="write"&&lang==="en")return "";
+    if((id==="write"||id==="scenes")&&lang==="en")return "";
     const dot=id==="today"&&due?`<span class="dot tnum">${due>99?"99+":due}</span>`:"";
     return `<button data-tab="${id}" class="${id===tab?"on":""}" ${id===tab?'aria-current="page"':""}>
       <span class="ni">${tabIcon(id)}</span>${name}${dot}</button>`;
@@ -1462,19 +1818,215 @@ function finishSession(){
   $("#s-fin").onclick=endSession;
 }
 
+
+/* ================= 오늘의 목표 (mission) ================= */
+const MISSIONS=[
+ {scene:"conveni",title:"편의점에서 혼자 계산하기",why:"가장 자주 마주치는 상황이에요. 봉투·데우기 질문에 바로 답할 수 있게 됩니다."},
+ {scene:"ramen", title:"식당에서 혼자 주문하기",why:"자리 안내부터 주문·계산까지 한 번에 끝내는 흐름을 익힙니다."},
+ {scene:"station",title:"역에서 표 사고 승강장 찾기",why:"이동이 막히면 여행 전체가 막혀요. 가장 먼저 뚫어야 할 상황입니다."},
+ {scene:"cafe",   title:"카페에서 사이즈까지 정해 주문하기",why:"매장/포장, 사이즈 질문에 막히지 않게 연습합니다."},
+ {scene:"way",    title:"길 물어보고 알아듣기",why:"지도만으로 안 될 때가 옵니다. 묻는 말과 듣는 답을 같이 익혀요."},
+ {scene:"hotel",  title:"호텔 체크인 혼자 하기",why:"도착 첫날 반드시 거치는 관문입니다."},
+ {scene:"shop",   title:"가게에서 사이즈 묻고 면세받기",why:"쇼핑에서 돈과 직결되는 표현들이에요."},
+ {scene:"taxi",   title:"택시로 목적지까지 가기",why:"늦은 밤이나 짐이 많을 때 꼭 필요합니다."},
+ {scene:"izakaya",title:"이자카야에서 주문하고 계산하기",why:"저녁 자리에서 쓰는 표현을 한 번에 익힙니다."},
+ {scene:"pharmacy",title:"약국에서 증상 말하고 약 사기",why:"아플 때 당황하지 않으려면 미리 입에 붙여둬야 합니다."}
+];
+const CARD_GOAL=10;
+function dayIndex(){return Math.floor(new Date(todayStr()+"T00:00:00").getTime()/DAY)}
+function todayMission(){
+  if(lang!=="jp")return null;
+  return MISSIONS[((dayIndex()%MISSIONS.length)+MISSIONS.length)%MISSIONS.length];
+}
+let doneScenes=store.get("doneScenes",{});
+function scenesToday(){const t=todayStr();return (doneScenes[t]||[])}
+function markScene(id){
+  const t=todayStr();
+  doneScenes[t]=doneScenes[t]||[];
+  if(!doneScenes[t].includes(id))doneScenes[t].push(id);
+  const keys=Object.keys(doneScenes).sort();
+  while(keys.length>14){delete doneScenes[keys.shift()]}
+  store.set("doneScenes",doneScenes);
+}
+function everCleared(id){return Object.values(doneScenes).some(a=>a.includes(id))}
+function renderMission(){
+  const el=$("#mission"),m=todayMission();
+  if(!m){el.style.display="none";return}
+  el.style.display="";
+  const cards=Math.min(stats.today||0,CARD_GOAL);
+  const cardOk=cards>=CARD_GOAL;
+  const sceneOk=scenesToday().includes(m.scene);
+  const sc=sceneById(m.scene);
+  const all=cardOk&&sceneOk;
+  const pct=Math.round(((cards/CARD_GOAL)*0.5+(sceneOk?0.5:0))*100);
+  el.classList.toggle("clear",all);
+  el.innerHTML=`
+    ${all?'<span class="cleartag">✓ 목표 달성</span>':'<span class="mtag">오늘의 목표</span>'}
+    <h2>${m.title}</h2>
+    <p class="why">${all?"오늘 몫을 끝냈어요. 내일은 다른 상황이 열립니다.":m.why}</p>
+    <div class="mchk">
+      <div class="mrow ${cardOk?"done":""}">
+        <span class="box">✓</span><span class="txt">카드 ${CARD_GOAL}장 학습하기</span>
+        <span class="pg">${cards}/${CARD_GOAL}</span>
+      </div>
+      <div class="mrow ${sceneOk?"done":""}">
+        <span class="box">✓</span><span class="txt">상황극 「${sc.title}」 완주</span>
+        <span class="pg">${sceneOk?"완료":"0/1"}</span>
+      </div>
+    </div>
+    <div class="mbar"><i style="width:${pct}%"></i></div>
+    ${all?"":`<div class="mcta">
+      <button class="btn ${cardOk?"mute":""}" id="m-cards">${cardOk?"카드 더 하기":"카드 학습"}</button>
+      <button class="btn ${sceneOk?"mute":"ghost"}" id="m-scene">상황극 연습</button>
+    </div>`}`;
+  if(!all){
+    $("#m-cards").onclick=()=>startSession();
+    $("#m-scene").onclick=()=>openScene(m.scene);
+  }
+}
+
+/* ================= 상황극 ================= */
+function renderScenes(){
+  $("#sc-title").innerHTML='상황극 연습 <span class="jp serif">「ばめん」</span>';
+  $("#sc-lead").textContent="가게에 들어가기 전에 여기서 한 번 돌려보세요. 상대가 뭐라고 할지 미리 알면 훨씬 덜 긴장됩니다.";
+  $("#scenelist").innerHTML=SCENES.map(s=>`
+    <button class="scard" data-id="${s.id}">
+      <span class="art">${ART[s.art]||""}</span>
+      <span class="in">
+        <span class="pl">${s.place}</span>
+        <b>${s.title}</b>
+        <span class="gl">${s.goal}</span>
+      </span>
+      ${everCleared(s.id)?'<span class="ok">✓</span>':""}
+    </button>`).join("");
+  $$("#scenelist .scard").forEach(b=>b.onclick=()=>openScene(b.dataset.id));
+}
+let PL=null;
+function openScene(id){
+  const s=sceneById(id);if(!s)return;
+  PL={s,i:0,revealed:false};
+  $("#p-title").textContent=s.title;
+  $("#p-body").innerHTML=`
+    <div class="p-art">${ART[s.art]||""}</div>
+    <div class="p-goal"><span class="lb">목표</span><p>${s.goal}</p></div>
+    <div class="p-tip">💡 ${s.tip}</div>
+    <div class="bubs" id="bubs"></div>`;
+  $("#player").classList.add("on");
+  document.body.style.overflow="hidden";
+  stepScene();
+}
+function closePlayer(){
+  $("#player").classList.remove("on");
+  document.body.style.overflow="";
+  PL=null;renderAll();
+}
+$("#p-close").onclick=closePlayer;
+function bubbleHTML(t,idx){
+  const me=t.w==="me";
+  return `<div class="bub ${me?"me":"them"}">
+    <span class="who">${me?"나":"상대"}</span>
+    <div class="box">
+      <div class="jp${lang==="jp"?" serif":""}">${t.jp}</div>
+      ${t.yo?`<div class="yo">${t.yo}</div>`:""}
+      <div class="pr">${t.pr}</div>
+      <div class="ko">${t.ko}</div>
+      <div class="acts">
+        <button data-say="${idx}">🔊 듣기</button>
+        ${t.alt&&t.alt.length?`<button data-alt="${idx}">＋ 다른 표현 ${t.alt.length}</button>`:""}
+      </div>
+    </div></div>`;
+}
+function wireBubbles(){
+  $$("#bubs [data-say]").forEach(b=>b.onclick=()=>{
+    const t=PL.s.turns[+b.dataset.say];speak(t.jp,"ja-JP");
+  });
+  $$("#bubs [data-alt]").forEach(b=>b.onclick=()=>openAlt(+b.dataset.alt));
+}
+function stepScene(){
+  if(!PL)return;
+  const s=PL.s,bubs=$("#bubs"),foot=$("#p-foot");
+  if(PL.i>=s.turns.length)return finishScene();
+  const t=s.turns[PL.i];
+  if(t.w==="them"){
+    bubs.insertAdjacentHTML("beforeend",bubbleHTML(t,PL.i));
+    wireBubbles();
+    speak(t.jp,"ja-JP");
+    PL.i++;
+    const nxt=s.turns[PL.i];
+    foot.innerHTML=`<button class="p-btn" id="p-next">${PL.i>=s.turns.length?"끝내기":nxt&&nxt.w==="me"?"내 차례 · 뭐라고 할까?":"다음"}</button>`;
+    $("#p-next").onclick=stepScene;
+    scrollBubs();return;
+  }
+  /* 내 차례 — 먼저 떠올리게 하고, 그다음 정답 */
+  if(!PL.revealed){
+    bubs.insertAdjacentHTML("beforeend",
+      `<div class="myturn" id="myturn"><div class="q">내 차례예요. 뭐라고 말할까요?</div>
+       <div class="k">${t.ko}</div></div>`);
+    PL.revealed=true;
+    foot.innerHTML='<button class="p-btn" id="p-rev">🗣 말해봤어요 · 정답 보기</button>';
+    $("#p-rev").onclick=stepScene;
+    scrollBubs();return;
+  }
+  const mt=$("#myturn");if(mt)mt.remove();
+  bubs.insertAdjacentHTML("beforeend",bubbleHTML(t,PL.i));
+  wireBubbles();
+  speak(t.jp,"ja-JP");
+  PL.revealed=false;PL.i++;
+  const nxt=s.turns[PL.i];
+  foot.innerHTML=`<button class="p-btn" id="p-next">${PL.i>=s.turns.length?"끝내기":nxt&&nxt.w==="me"?"내 차례 · 뭐라고 할까?":"다음"}</button>`;
+  $("#p-next").onclick=stepScene;
+  scrollBubs();
+}
+function scrollBubs(){
+  const b=$("#p-body");
+  requestAnimationFrame(()=>b.scrollTo({top:b.scrollHeight,behavior:"smooth"}));
+}
+function finishScene(){
+  const s=PL.s;
+  markScene(s.id);
+  $("#bubs").insertAdjacentHTML("beforeend",
+    `<div class="p-done"><div class="em">🎉</div><h3>완주했어요!</h3>
+     <p>이제 실제로 ${s.place}에 들어가 보세요.</p></div>`);
+  $("#p-foot").innerHTML='<button class="p-btn" id="p-fin">완료</button>';
+  $("#p-fin").onclick=closePlayer;
+  scrollBubs();
+}
+function openAlt(idx){
+  const t=PL.s.turns[idx];
+  $("#sheet-body").innerHTML=`
+    <span class="sh-title">${t.w==="me"?"이렇게도 말할 수 있어요":"이렇게 들릴 수도 있어요"}</span>
+    <p class="sh-main${lang==="jp"?" serif":""}">${t.jp}</p>
+    <div class="sh-mainpr">${t.pr} · ${t.ko}</div>
+    <div class="altlist">
+      ${t.alt.map((a,i)=>`<div class="altitem">
+        <div class="jp${lang==="jp"?" serif":""}">${a.jp}</div>
+        <div class="pr">${a.pr}</div>
+        <div class="ko">${a.ko}</div>
+        ${a.note?`<div class="note">${a.note}</div>`:""}
+        <button class="say" data-i="${i}">🔊 듣기</button>
+      </div>`).join("")}
+    </div>`;
+  $("#sheet").classList.add("on");$("#scrim").classList.add("on");
+  $$("#sheet-body .say").forEach(b=>b.onclick=()=>speak(t.alt[+b.dataset.i].jp,"ja-JP"));
+}
+
 /* ---------- boot ---------- */
 function renderAll(){
   document.body.classList.toggle("lang-en",lang==="en");
-  if(lang==="en"&&tab==="write")tab="letters";
-  renderLangSw();renderTabs();renderEvi();renderToday();renderLetters();renderPhrases();
-  if(lang==="jp")renderWrite();
+  if(lang==="en"&&(tab==="write"||tab==="scenes"))tab="letters";
+  renderLangSw();renderTabs();renderEvi();renderMission();renderToday();renderLetters();renderPhrases();
+  if(lang==="jp"){renderWrite();renderScenes()}
   go(tab);
 }
 const redrawPads=()=>{mainPad.redraw();if(sesPad)sesPad.redraw()};
 new MutationObserver(redrawPads).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
 if(window.matchMedia)window.matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change",redrawPads);
 document.addEventListener("keydown",e=>{
-  if(e.key==="Escape"){if($("#sheet").classList.contains("on"))closeSheet();else if(SES)endSession()}
+  if(e.key==="Escape"){
+    if($("#sheet").classList.contains("on"))closeSheet();
+    else if(PL)closePlayer();
+    else if(SES)endSession();
+  }
   if(SES&&e.key===" "){e.preventDefault();const r=$("#s-rev")||$("#s-next");if(r)r.click()}
 });
 renderAll();
