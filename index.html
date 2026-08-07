@@ -439,6 +439,16 @@ section.view.on{display:block;animation:fade .18s ease}
 }
 .bub .im svg{width:100%;max-width:210px;height:auto;display:block}
 
+.verbar{
+  display:flex;align-items:center;gap:10px;margin:22px 2px 0;
+  font-size:12px;color:var(--sub);
+}
+.verbar button{
+  margin-left:auto;border:1px solid var(--line);background:var(--panel);
+  color:var(--sub);border-radius:999px;padding:7px 13px;font-size:12px;font-weight:600;
+}
+.verbar button:disabled{opacity:.55}
+
 /* ===== 만화 컷 애니메이션 ===== */
 @keyframes chIn{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-2.2px)}}
@@ -560,6 +570,11 @@ section.view.on{display:block;animation:fade .18s ease}
       <button class="btn full" type="submit">일정 추가</button>
     </form>
     <ul class="triplist" id="triplist"></ul>
+  </div>
+
+  <div class="verbar">
+    <span id="ver-txt">버전 —</span>
+    <button id="ver-btn">업데이트 확인</button>
   </div>
 </section>
 
@@ -2270,22 +2285,54 @@ document.addEventListener("keydown",e=>{
 });
 renderAll();
 
-/* 오프라인 캐시 등록 — 한 번 열면 비행기 모드에서도 실행됨 */
+/* ---------- 오프라인 캐시 + 업데이트 감지 ---------- */
+const APP_VER="6";
+let swReg=null;
+$("#ver-txt").textContent="버전 "+APP_VER;
+
 if("serviceWorker" in navigator){
   window.addEventListener("load",()=>{
     navigator.serviceWorker.register("./sw.js").then(reg=>{
+      swReg=reg;
       reg.addEventListener("updatefound",()=>{
         const nw=reg.installing;
         if(!nw)return;
         nw.addEventListener("statechange",()=>{
-          if(nw.state==="installed"&&navigator.serviceWorker.controller){
-            showUpdateToast();
-          }
+          if(nw.state==="installed"&&navigator.serviceWorker.controller)showUpdateToast();
         });
       });
+      checkUpdate();
     }).catch(()=>{});
   });
+  /* iOS 홈화면 앱은 백그라운드에서 확인을 안 하므로, 앱이 앞으로 올 때마다 직접 확인 */
+  document.addEventListener("visibilitychange",()=>{
+    if(document.visibilityState==="visible")checkUpdate();
+  });
 }
+
+/* 서비스워커 감지와 별개로 버전 파일을 직접 대조 (iOS 대응) */
+function checkUpdate(silent){
+  if(swReg)swReg.update().catch(()=>{});
+  return fetch("./version.json?t="+Date.now(),{cache:"no-store"})
+    .then(r=>r.ok?r.json():null)
+    .then(j=>{
+      if(j&&String(j.v)!==APP_VER){showUpdateToast();return "new"}
+      return "current";
+    })
+    .catch(()=>"offline");
+}
+
+$("#ver-btn").onclick=e=>{
+  const b=e.currentTarget;
+  b.disabled=true;b.textContent="확인 중…";
+  checkUpdate().then(r=>{
+    b.disabled=false;b.textContent="업데이트 확인";
+    const t=$("#ver-txt");
+    if(r==="new")t.textContent="새 버전이 있어요";
+    else if(r==="offline")t.textContent="버전 "+APP_VER+" · 오프라인 (인터넷 연결 후 다시)";
+    else t.textContent="버전 "+APP_VER+" · 최신입니다";
+  });
+};
 function showUpdateToast(){
   if($("#upd-toast"))return;
   const el=document.createElement("div");
